@@ -1,5 +1,3 @@
-const 정답 = "APPLE";
-
 let index = 0;
 // let은 수정 가능한 변수
 let attempts = 0;
@@ -28,8 +26,17 @@ function appStart() {
     clearInterval(timer);
   };
 
-  const handleEnterKey = () => {
+  const handleEnterKey = async () => {
     let 맞은_갯수 = 0;
+
+    // 서버에서 정답을 받아오는 코드
+    const 응답 = await fetch("/answer");
+    // await : 서버에서 서버로 요청을 보낸다음에 그거로 응답이 올 때까지 기다리는 구문
+    // await 안넣으면 요청보내고 응답을 아직 안왔는데 다음코드가 실행됨
+
+    const 정답 = await 응답.json();
+    // json : javascript object notation 자바스크립트에 맞는 포맷으로 바꿔준다
+    // json으로 바꾸는데 시간이 조금 걸리기 때문에 여기도 await을 쓴다
 
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
